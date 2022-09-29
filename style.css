@@ -56,6 +56,10 @@ button{
     border: 1px solid black;
     border-radius: 15px;
     box-shadow: 4px 4px 8px -1px rgba(0, 0, 0, 0.34); 
+    transition: 0.3s;
+}
+.mainBtn:active{
+    scale: 0.9;
 }
 .tmg{
     width: max-content;
@@ -91,4 +95,8 @@ button{
     box-shadow: 4px 4px 8px -1px rgba(0, 0, 0, 0.34); 
     background-color: seagreen;
     font-size: 18px;
+    transition: 0.2s;
+}
+.btn:hover{
+    scale: 1.05;
 }
