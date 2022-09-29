@@ -1,54 +1,65 @@
-const pocemon = {
-    name: 'blacemon',
-    health: 20,
-    eat(){
-       if(this.health > 80){
-        this.health = 100;
-       } else{
-        this.health += 20;
-       }
-    },
-    sayHi(){
-        alert(this.name);
-    },
-    killer(){
-        if(pocemon.health > 0){
-            pocemon.health--
-            document.querySelector('.health').innerHTML = `УРОВЕНЬ ЖИЗНИ:  ${pocemon.health}`;
-        }else{
-            clearInterval(hunter);
-            document.querySelector('.health').innerHTML = 'Я СДОХ(((';
+let lives = 0;
+
+function Tamagochi(){
+    const tmg = document.createElement('div');
+    tmg.className = 'tmg';
+    document.querySelector('.container').append(tmg);
+
+    const hpe = document.createElement('div');
+    hpe.className = 'hp';
+    tmg.append(hpe);
+
+    const face = document.createElement('img');
+    face.className = 'face';
+    tmg.append(face);
+
+    const btn = document.createElement('button');
+    btn.className = 'btn';
+    tmg.append(btn);
+    btn.innerHTML = 'Save';
+    btn.addEventListener('click', () => this.eat());
+
+
+
+    this.health = 100;
+    this.killer = function(){
+        if(this.health > 0){
+            this.health--
+            hpe.style.width = this.health + 'px';
+        } else {
+            hpe.style.opacity = 0;
+            face.src = './img/RIP.png';
+            tmg.removeEventListener('click', () => this.eat());
+
+            setTimeout(() => {
+                tmg.style.opacity = 0;
+                setTimeout(() => {
+                    tmg.remove();
+                }, 1000)
+            }, 1000);
+            lives++;
+            document.querySelector('.count').innerHTML = 'Умерло: ' + lives;
+            clearInterval(time);
         }
-    },
+    };
+    this.eat = function(){
+        if(this.health > 90){
+            this.health = 100;
+        } else {
+            this.health += Math.round(this.health * 0.2);
+        }
+    };
+    this.face = function(){
+        const faceArr = ['./img/tmg1.png', './img/tmg3.png', './img/tmg4.png', './img/tmg5.png', './img/tmg6.png', './img/tmg7.png' ];
+        face.src = faceArr[Math.floor(Math.random() * faceArr.length)];
+    }
+    const time = setInterval(() => this.killer(), 100);
 }
 
-function create(){
-    const pocBody = document.createElement('div');
-    pocBody.className = 'tamagochi';
-    document.querySelector('.container').append(pocBody);
-    const hp = document.createElement('div');
-    hp.className = 'health';
-    pocBody.append(hp);
-    hp.innerHTML = pocemon.health;
-    const pic = document.createElement('div');
-    pic.className = 'pic';
-    pocBody.append(pic);
+function createTmg(){
+    const biba = new Tamagochi();
+    biba.killer();
+    biba.face();
 }
 
-document.querySelector('#button').addEventListener('click', createPocemon);
-document.querySelector('#feed').addEventListener('click', () => pocemon.eat());
-document.querySelector('#hi').addEventListener('click', () => pocemon.sayHi());
-document.querySelector('#kill').addEventListener('click', pocemon.killer);
-document.querySelector('.health').innerHTML = pocemon.health;
-
-document.querySelector('#created').addEventListener('click', create);
-
-const hunter = setInterval(pocemon.killer, 1000);
-
-function createPocemon(){
-    console.log(pocemon);
-}
-
-
-
-
+document.querySelector('#createTmg').addEventListener('click', createTmg);
