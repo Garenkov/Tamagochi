@@ -17,9 +17,7 @@ function Tamagochi(){
     btn.className = 'btn';
     tmg.append(btn);
     btn.innerHTML = 'Save';
-    btn.addEventListener('click', () => this.eat());
-
-
+    btn.addEventListener('click', () => this.save());
 
     this.health = 100;
     this.killer = function(){
@@ -29,7 +27,7 @@ function Tamagochi(){
         } else {
             hpe.style.opacity = 0;
             face.src = './img/RIP.png';
-            tmg.removeEventListener('click', () => this.eat());
+            tmg.removeEventListener('click', () => this.save());
 
             setTimeout(() => {
                 tmg.style.opacity = 0;
@@ -42,7 +40,7 @@ function Tamagochi(){
             clearInterval(time);
         }
     };
-    this.eat = function(){
+    this.save = function(){
         if(this.health > 90){
             this.health = 100;
         } else {
